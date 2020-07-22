@@ -1,8 +1,8 @@
-replicaCount: 1
+replicaCount: 3
 
 image:
-  repository:
-  tag:
+  repository: us.gcr.io/rlt-demo/rlt-demo-app
+  tag: latest
   pullPolicy: Always
 
 service:
@@ -16,7 +16,7 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   path: /
   hosts:
-    - chart-example.local
+    - rlt-demo.exitprompt.com
   tls: []
 
 
