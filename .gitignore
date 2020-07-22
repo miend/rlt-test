@@ -1,0 +1,6 @@
+# tfstate should be stored remotely, but currently we don't have that. Uncomment when remote
+# storage is added.
+# *.tfstate
+# *.tfstate.*
+.terraform/
+plan.out
