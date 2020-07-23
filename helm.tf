@@ -16,11 +16,9 @@ resource  "helm_release" "nginx-ingress" {
 }
 
 resource "helm_release" "rlt-demo" {
-  name  = "rlt-demo"
-  chart = "./charts/rlt-demo"
-
-  set {
-    name  = "service.type"
-    value = "NodePort"
-  }
+  for_each = toset(var.namespaces)
+  name             = "rlt-demo"
+  chart            = "./charts/rlt-demo"
+  namespace        = each.value
+  create_namespace = true
 }

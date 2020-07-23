@@ -17,3 +17,9 @@ variable "initial_node_count" {
 variable "machine_type" {
   default = "n1-standard-1"
 }
+
+variable "namespaces" {
+  description = "Namespaces that should be created in the GKE cluster"
+  type        = list(string)
+  default     = ["production", "staging"]
+}
