@@ -1,3 +1,9 @@
+provider "google" {
+  # credentials = $credentials-file, for service account when running remote
+  # project     = var.project, so we can remove it from other resource configs where it's inferred
+  # from the provider
+}
+
 resource "google_container_cluster" "default" {
   name        = var.name
   project     = var.project
