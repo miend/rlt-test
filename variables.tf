@@ -25,8 +25,20 @@ variable "namespaces" {
     host_prefix            = string
   }))
 
+  default = {
+    production = {
+      whitelist_source_range = "0.0.0.0/0" 
+      host_prefix            = ""
+    },
+    staging = {
+      whitelist_source_range = "127.0.0.1"
+      host_prefix            = "staging."
+    }
+  }
+
+# Should validate whitelist_source_range CIDR blocks
 #  validation {
-#    condition     = can(regex("CIDR-checking regex", var.namespaces.value["access_policy"]))
+#    condition     = can(regex("CIDR-checking regex", value))
 #    error_message = "The namespace access policy must be valid CIDR blocks separated by commas."
 #  }
 }
