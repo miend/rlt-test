@@ -21,7 +21,6 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   path: /
   hosts:
-    - rlt-demo.exitprompt.com
   tls: []
 
 fullnameOverride: rlt-demo

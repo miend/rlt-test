@@ -22,7 +22,7 @@ resource  "helm_release" "nginx-ingress" {
 }
 
 resource "helm_release" "rlt-demo" {
-  for_each = var.namespace_access_policies
+  for_each = var.namespaces
   name             = "rlt-demo"
   chart            = "./charts/rlt-demo"
   namespace        = each.key
@@ -30,6 +30,12 @@ resource "helm_release" "rlt-demo" {
 
   set {
     name  = "ingress.annotations.nginx\\.ingress\\.kubernetes\\.io/whitelist-source-range"
-    value = each.value
+    value = each.value["whitelist_source_range"]
+  }
+
+  set {
+    # Configuration for multiple hosts should be included later
+    name  = "ingress.hosts[0]"
+    value = "${each.value["host_prefix"]}${var.host}"
   }
 }
