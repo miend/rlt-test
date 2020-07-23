@@ -6,7 +6,7 @@ variable "project" {
   default = "rlt-demo"
 }
 
-variable "location" {
+variable "region" {
   default = "us-central1"
 }
 

@@ -2,16 +2,20 @@ resource "google_container_cluster" "default" {
   name        = var.name
   project     = var.project
   description = "RLT Demo"
-  location    = var.location
+  location    = var.region
 
   remove_default_node_pool = true
   initial_node_count       = var.initial_node_count
+
+  provisioner "local-exec" {
+    command = "gcloud container clusters get-credentials --region ${var.region} ${var.name}"
+  }
 }
 
 resource "google_container_node_pool" "default" {
   name       = "${var.name}-node-pool"
   project    = var.project
-  location   = var.location
+  location   = var.region
   cluster    = google_container_cluster.default.name
   node_count = 1
 
