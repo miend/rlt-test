@@ -13,6 +13,11 @@ resource  "helm_release" "nginx-ingress" {
     name  = "controller.service.loadBalancerIP" 
     value = google_compute_address.ingress.address
   }
+
+  set {
+    name  = "controller.service.externalTrafficPolicy"
+    value = "Local"
+  }
 }
 
 resource "helm_release" "rlt-demo" {
