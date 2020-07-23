@@ -23,6 +23,7 @@ ingress:
     - rlt-demo.exitprompt.com
   tls: []
 
+fullnameOverride: rlt-demo
 
 resources: {}
 
