@@ -18,12 +18,18 @@ resource  "helm_release" "nginx-ingress" {
     name  = "controller.service.externalTrafficPolicy"
     value = "Local"
   }
+
 }
 
 resource "helm_release" "rlt-demo" {
-  for_each = toset(var.namespaces)
+  for_each = var.namespace_access_policies
   name             = "rlt-demo"
   chart            = "./charts/rlt-demo"
-  namespace        = each.value
+  namespace        = each.key
   create_namespace = true
+
+  set {
+    name  = "ingress.annotations.nginx\\.ingress\\.kubernetes\\.io/whitelist-source-range"
+    value = each.value
+  }
 }
