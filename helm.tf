@@ -19,6 +19,9 @@ resource  "helm_release" "nginx-ingress" {
     value = "Local"
   }
 
+  depends_on = [
+    google_container_node_pool.node_pool,
+  ]
 }
 
 # There are no TLS certs configured, and those would definitely be needed for production.
@@ -45,6 +48,7 @@ resource "helm_release" "rlt-demo" {
 
   depends_on = [
     google_storage_bucket_iam_member.member,
+    google_container_node_pool.node_pool,
   ]
 }
 
