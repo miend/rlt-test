@@ -1,4 +1,8 @@
-# Configure state storage to GCS backend! 
+locals {
+  project  = "rlt-demo"
+  region   = "us-east4"
+  location = "us-east4"
+}
 
 generate "providers" {
   path      = "providers.tf"
@@ -30,24 +34,28 @@ provider "random" {
 EOF
 }
 
-remote_state {
-  backend = "gcs"
-  generate = {
-    path      = "backend.tf"
-    if_exists = "overwrite"
-  }
-  config = {
-    bucket  = "terraform-state"
-    key     = "${path_relative_to_include()}/terraform.tfstate"
-    region  = "us-east4"
-    encrypt = false
-  }
-}
+#remote_state {
+#  backend = "gcs"
+#  generate = {
+#    path      = "backend.tf"
+#    if_exists = "overwrite"
+#  }
+#  config = {
+#    bucket   = "terraform-state"
+#    prefix   = "terraform/state"
+#    project  = local.project
+#    location = local.location
+#    key      = "${path_relative_to_include()}/terraform.tfstate"
+#    region   = "us-east4"
+#    encrypt  = false
+#  }
+#}
 
-inputs {
-  project     = rlt-demo
-  region      = us-east4
-  location    = us-east4
-  chart_names = fileset(get_terragrunt_dir(), "./charts/*")
-  charts_path = "${get_terragrunt_dir()}/charts"
+inputs = {
+  project      = local.project
+  region       = local.region
+  location     = local.location
+  cluster_name = "rlt-demo"
+  chart_names  = fileset("${get_terragrunt_dir()}/charts", "*")
+  charts_path  = "${get_terragrunt_dir()}/charts"
 }
