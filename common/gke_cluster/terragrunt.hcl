@@ -2,10 +2,6 @@ terraform {
   source = "git::git@github.com:miend/terraform-modules.git//gke_cluster"
 }
 
-dependency "gke_cluster" {
-  config_path = "../gke_cluster"
-}
-
 dependency "vpc" {
   config_path = "../vpc"
 
