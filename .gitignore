@@ -3,5 +3,6 @@
 # *.tfstate
 # *.tfstate.*
 .terraform/
+.terragrunt-cache
 plan.out
 *.tfvars
