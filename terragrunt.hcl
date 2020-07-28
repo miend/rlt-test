@@ -34,28 +34,25 @@ provider "random" {
 EOF
 }
 
-#remote_state {
-#  backend = "gcs"
-#  generate = {
-#    path      = "backend.tf"
-#    if_exists = "overwrite"
-#  }
-#  config = {
-#    bucket   = "terraform-state"
-#    prefix   = "terraform/state"
-#    project  = local.project
-#    location = local.location
-#    key      = "${path_relative_to_include()}/terraform.tfstate"
-#    region   = "us-east4"
-#    encrypt  = false
-#  }
-#}
+remote_state {
+  backend = "gcs"
+  generate = {
+    path      = "backend.tf"
+    if_exists = "overwrite"
+  }
+  config = {
+    bucket   = "miend-terraform-state"
+    prefix   = "terraform/state"
+    project  = local.project
+    location = local.location
+  }
+}
 
 inputs = {
   project      = local.project
   region       = local.region
   location     = local.location
   cluster_name = "rlt-demo"
-  chart_names  = fileset("${get_terragrunt_dir()}/charts", "*")
-  charts_path  = "${get_terragrunt_dir()}/charts"
+  chart_names  = fileset("${get_terragrunt_dir()}/../../charts", "*")
+  charts_path  = "${get_terragrunt_dir()}/../../charts"
 }
